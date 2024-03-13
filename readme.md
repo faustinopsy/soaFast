@@ -9,7 +9,11 @@ pip install httpx
 
 4º
 pip freeze > requirements.txt
-uvicorn main:app --reload
+uvicorn login_service:app --reload --port 8001
+uvicorn produtos_service:app --reload --port 8002
+uvicorn carrinho_service:app --reload --port 8003
+uvicorn pedido_service:app --reload --port 8004
+
 
 5º (instalar em outro local) passo 1 e passo 2 
 pip install -r requirements.txt
