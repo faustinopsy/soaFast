@@ -1,0 +1,2 @@
+01122000:{'cep': '01122-000', 'logradouro': 'Rua Ribeiro de Lima', 'complemento': '', 'bairro': 'Bom Retiro', 'localidade': 'São Paulo', 'uf': 'SP', 'ibge': '3550308', 'gia': '1004', 'ddd': '11', 'siafi': '7107'}
+08070000:{'cep': '08070-000', 'logradouro': 'Avenida São Miguel', 'complemento': 'de 8664/8665 ao fim', 'bairro': 'Vila Norma', 'localidade': 'São Paulo', 'uf': 'SP', 'ibge': '3550308', 'gia': '1004', 'ddd': '11', 'siafi': '7107'}

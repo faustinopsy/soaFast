@@ -4,8 +4,6 @@ import re
 
 app = FastAPI()
 
-cep_cache = {}
-
 def validar_cep(cep: str) -> bool:
     return re.fullmatch(r"\d{5}-?\d{3}", cep) is not None
 
@@ -18,6 +16,24 @@ async def consultar_cep_externo(cep: str) -> dict:
         else:
             raise HTTPException(status_code=404, detail="CEP não encontrado")
 
+def salvar_cache(cache: dict):
+    with open("cep_cache.txt", "w") as file:
+        for cep, dados in cache.items():
+            file.write(f"{cep}:{dados}\n")
+
+def carregar_cache() -> dict:
+    cache = {}
+    try:
+        with open("cep_cache.txt", "r") as file:
+            for line in file:
+                cep, dados = line.strip().split(":")
+                cache[cep] = dados
+    except FileNotFoundError:
+        pass
+    return cache
+
+cep_cache = carregar_cache()
+
 @app.get("/cep/{cep}")
 async def buscar_cep(cep: str):
     cep = cep.replace("-", "")
@@ -29,7 +45,9 @@ async def buscar_cep(cep: str):
         return {"data": cep_cache[cep], "cache": True}
     
     dados_cep = await consultar_cep_externo(cep)
-    cep_cache[cep] = dados_cep
+    if cep not in cep_cache:  
+        cep_cache[cep] = dados_cep
+        salvar_cache(cep_cache)
     
     return {"data": dados_cep, "cache": False}
 
